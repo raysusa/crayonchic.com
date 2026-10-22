@@ -12,7 +12,8 @@ let urls = [`https://crayonchic.com/`];
 for (const b of books) {
   const html = tpl.split('{{SLUG}}').join(b.slug).split('{{TITLE}}').join(esc(b.title))
     .split('{{DESC}}').join(esc(b.tagline + ' ' + (b.status === 'live' ? 'Available now on Amazon.' : 'Coming soon.')))
-    .split('{{COVER}}').join(b.cover);
+    .split('{{COVER}}').join(b.cover)
+    .split('{{AMAZON}}').join(b.amazonUrl || 'https://crayonchic.com/');
   fs.mkdirSync(path.join(root, 'books', b.slug), { recursive: true });
   fs.writeFileSync(path.join(root, 'books', b.slug, 'index.html'), html);
   urls.push(`https://crayonchic.com/books/${b.slug}/`);

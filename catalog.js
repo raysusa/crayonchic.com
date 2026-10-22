@@ -62,12 +62,12 @@ window.CRAYON_BOOKS = [
     collection: "The Lebanese Collection",
     title: "My First Lebanese Sweets Coloring Book",
     shortTitle: "Lebanese Sweets",
-    subtitle: "Twenty treats for Christmas, Ramadan, Eid and Easter",
+    subtitle: "20 Big & Simple Dessert Pictures for Toddlers and Kids Ages 2–6: Baklawa, Maamoul, Knafeh, Booza and More",
     titleAr: "حلويات لبنانية",
-    status: "coming-soon",
-    statusLabel: "Coming soon · Holiday 2026",
-    amazonUrl: "",                  // add the Amazon link when it goes live
-    price: "",                      // add the price when it goes live
+    status: "live",
+    statusLabel: "Available now",
+    amazonUrl: "https://www.amazon.com/dp/B0HNRZ9T2G",
+    price: "$13.49",
     accent: "#5B1D31",              // rose
     arabic: true,
     audience: "Kids",
