@@ -3,7 +3,7 @@
 Static site (GitHub Pages). Home page = index.html (one page). Book pages = books/<slug>/.
 
 ## Add a new book (no redesign needed)
-1. Put the cover (and a few page previews) in img/ as .webp.
+1. Put the cover (and a few page previews) in img/ as .webp, plus a 1200x630 share thumbnail at img/og-<slug>.jpg (shown when the link is pasted in WhatsApp or messaging apps).
 2. Open catalog.js and copy one book object in CRAYON_BOOKS. Change slug, title, subtitle,
    status ("live" or "coming-soon"), amazonUrl, price, accent color, arabic (true only for
    Arab-heritage books), pages, ages, cover, tagline, description, highlights, pagesPreview.
