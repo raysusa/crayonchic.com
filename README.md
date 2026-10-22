@@ -15,3 +15,21 @@ In catalog.js set its status to "live", statusLabel "Available now", amazonUrl (
 Both current books (Mezze, Sweets) are live.
 
 All books share one standard: 8.5 x 11 in, premium color, white paper, glossy cover (CRAYON_BRAND.trim).
+
+## Analytics (GoatCounter)
+Every page loads GoatCounter (free, no cookies, no banner needed). The site code lives in ONE place:
+CRAYON_BRAND.goatcounter in catalog.js ("crayonchic", dashboard: https://crayonchic.goatcounter.com).
+If it changes, edit it there and run `node tools/build-pages.js`; that writes it into index.html and every book page.
+Click tracking: every Amazon button carries data-goatcounter-click, named buy-<slug>-<where>
+(e.g. buy-lebanese-mezze-home-hero, buy-lebanese-sweets-bookpage, buy-lebanese-mezze-bookpage-nav).
+Buttons rendered from catalog.js get these automatically, so new books need nothing extra.
+Other events: review-<slug>-bookpage, xmas-banner-buy-<slug>-<home|bookpage>, xmas-banner-dismiss-<page>.
+
+## Seasonal banner
+CRAYON_PROMO.christmas in catalog.js. Set enabled: false to switch it off; it also hides itself
+automatically from hideFrom (2026-12-26). Visitors who close it don't see it again (localStorage).
+Preview anytime with ?xmas=1, hide with ?xmas=0.
+
+## Reviews
+Each live book with an `asin` in catalog.js gets a "Loved it? Leave a review" block on its page,
+linking to https://www.amazon.com/review/create-review?asin=<ASIN>.

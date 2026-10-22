@@ -93,4 +93,49 @@
     });
     hero.addEventListener('mouseleave',function(){book.style.transform=''});
   }
+
+  // Seasonal gift banner (config: CRAYON_PROMO.christmas in catalog.js)
+  (function(){
+    var P=(window.CRAYON_PROMO||{}).christmas, BOOKS=window.CRAYON_BOOKS||[];
+    if(!P) return;
+    var q=location.search, force=/[?&]xmas=1\b/.test(q);
+    if(/[?&]xmas=0\b/.test(q)) return;
+    var key='cc-promo-'+(P.id||'xmas');
+    if(!force){
+      if(!P.enabled) return;
+      if(P.hideFrom){ var a=String(P.hideFrom).split('-'); if(new Date()>=new Date(+a[0],+a[1]-1,+a[2])) return; }
+      try{ if(localStorage.getItem(key)) return; }catch(e){}
+    }
+    var esc=function(t){return String(t==null?'':t).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})};
+    var live=(P.books||[]).map(function(sl){return BOOKS.filter(function(b){return b.slug===sl})[0]}).filter(function(b){return b&&b.status==='live'&&b.amazonUrl});
+    if(!live.length) return;
+    var rootEl=d.querySelector('[data-root]'), base=rootEl?rootEl.getAttribute('data-root'):'';
+    var ctx=d.getElementById('product')?'bookpage':'home', page=location.pathname||'/';
+    var gc=function(name,title){return ' data-goatcounter-click="'+esc(name)+'" data-goatcounter-title="'+esc(title)+'" data-goatcounter-referrer="'+esc(page)+'"'};
+    var el=d.createElement('aside');
+    el.className='xmas'; el.setAttribute('aria-label',P.eyebrow||'Christmas gifting');
+    el.innerHTML=
+      '<button class="xmas-x" type="button" aria-label="Dismiss"'+gc('xmas-banner-dismiss-'+ctx,'Christmas banner dismissed ('+ctx+')')+'>×</button>'+
+      '<div class="xmas-covers" aria-hidden="true">'+live.slice(0,2).map(function(b,i){return '<img class="c'+i+'" src="'+base+esc(b.coverSm||b.cover)+'" width="90" height="117" alt="" loading="lazy" decoding="async">'}).join('')+'</div>'+
+      '<div class="xmas-body">'+
+        '<p class="xmas-k"><span class="xmas-star" aria-hidden="true">✦</span> '+esc(P.eyebrow)+'</p>'+
+        '<p class="xmas-t">'+esc(P.text)+'</p>'+
+        '<div class="xmas-links">'+live.map(function(b){
+          return '<a href="'+esc(b.amazonUrl)+'" target="_blank" rel="noopener"'+gc('xmas-banner-buy-'+b.slug+'-'+ctx,'Christmas banner: buy '+b.shortTitle+' on Amazon ('+ctx+')')+'>'+(function(t){var w=String(t||'').split(' ');return w.length>1?'<em>'+esc(w.slice(0,-1).join(' '))+' </em>'+esc(w[w.length-1]):esc(t)})(b.shortTitle)+(b.price?' <span>'+esc(b.price)+'</span>':'')+' <i aria-hidden="true">→</i></a>';
+        }).join('')+'</div>'+
+        (P.note?'<p class="xmas-note">'+esc(P.note)+'</p>':'')+
+      '</div>';
+    d.body.appendChild(el);
+    var show=function(){el.classList.add('on')};
+    if(reduce) show(); else setTimeout(function(){requestAnimationFrame(show)},force?200:1100);
+    el.querySelector('.xmas-x').addEventListener('click',function(){
+      try{localStorage.setItem(key,'1')}catch(e){}
+      el.classList.remove('on'); el.classList.add('off');
+      setTimeout(function(){el.remove()},reduce?0:450);
+    });
+  })();
+
+  // GoatCounter: bind click tracking to buttons rendered by JS (count.js skips already-bound ones)
+  var gcBind=function(){ if(window.goatcounter&&window.goatcounter.bind_events) window.goatcounter.bind_events(); };
+  gcBind(); window.addEventListener('load',gcBind);
 })();
