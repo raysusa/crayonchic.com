@@ -5,11 +5,12 @@
 
   // Sticky nav state
   var nav=d.getElementById('nav');
-  var onScroll=function(){nav.classList.toggle('scrolled',window.scrollY>8)};
+  var onScroll=function(){if(nav)nav.classList.toggle('scrolled',window.scrollY>8)};
   onScroll(); window.addEventListener('scroll',onScroll,{passive:true});
 
   // Scroll reveal
-  var els=[].slice.call(d.querySelectorAll('.reveal'));
+  var els=[].slice.call(d.querySelectorAll('.reveal, .reveal-card'));
+  [].forEach.call(d.querySelectorAll('.reveal-card'),function(c,i){c.style.setProperty('--d',(i%4*0.05).toFixed(2)+'s')});
   if(!reduce && 'IntersectionObserver' in window){
     var io=new IntersectionObserver(function(entries){
       entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
