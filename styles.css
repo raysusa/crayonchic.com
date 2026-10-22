@@ -219,3 +219,5 @@ a{color:inherit}
 .nw{white-space:nowrap}
 .mini-pair{display:flex;gap:10px;margin-top:28px}
 .mini-pair img{width:calc(50% - 5px);border-radius:8px;box-shadow:0 0 0 1px rgba(20,33,61,.08),0 14px 28px -18px rgba(20,33,61,.45)}
+
+.sweets-copy .btn + .btn{margin-left:12px;margin-top:10px}
